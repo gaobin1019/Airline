@@ -1,3 +1,4 @@
+from app import db
 #table schema for airplain infomations
 class AirInfo(db.Model):
     flightNumber = db.Column(db.Integer,primary_key=True)
@@ -20,6 +21,3 @@ class AirInfo(db.Model):
     #print "My name is %s and weight is %d kg!" % ('Zara', 21)
     def __repr__(self):
         return '<flightNumber %d,airline %s>' % (self.username,self.airline)
-
-
-        
