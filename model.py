@@ -20,4 +20,4 @@ class AirInfo(db.Model):
 
     #print "My name is %s and weight is %d kg!" % ('Zara', 21)
     def __repr__(self):
-        return '<flightNumber %d,airline %s>' % (self.username,self.airline)
+        return '<flightNumber %d,airline %s>' % (self.flightNumber,self.airline)
