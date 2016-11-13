@@ -23,7 +23,8 @@ from model import *
 @app.route('/webhook', methods=['POST'])
 def webhook():
     data = AirInfo.query.filter(AirInfo.flightNumber=="522")
-    print("data %" % data)
+    print("data")
+    print(data)
     res = {
         "speech":data,
         "displayText": data,
