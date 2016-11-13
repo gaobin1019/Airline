@@ -18,6 +18,7 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 #create a db object  I'll manually enter data into database for this project.
 db = SQLAlchemy(app)
 
+#don't know why * works but AirInfo not, todo .....
 from model import *
 
 @app.route('/webhook', methods=['POST'])
