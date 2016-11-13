@@ -24,11 +24,12 @@ from model import *
 def webhook():
     data = ""+AirInfo.query.filter(AirInfo.flightNumber=="522").first()
     print("data")
-    print(data)
-    print(type(data))
+
+    print(getattr(data,"airline"))
+    print(type(getattr(data,"airline")))
     res = {
-        "speech":data,
-        "displayText": data,
+        "speech":getattr(data,"airline"),
+        "displayText": getattr(data,"airline"),
         "source": "airline database"
     }
 
