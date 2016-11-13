@@ -23,16 +23,37 @@ from model import *
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    """
     data = AirInfo.query.filter(AirInfo.flightNumber=="522").first()
     print("data")
 
     print(getattr(data,"airline"))
     print(type(getattr(data,"airline")))
+    """
+
+
+    req = request.get_json(silent=True, force=True)
+    print("request")
+    print(json.dumps(req,indent=4))
+
+    if req.get("result").get("action") != "showInfoByFlightNumber":
+        return{}
+    flightNum = req.get("result").get("parameters").get("flightNumber")
+
+    data = AirInfo.query.filter(AirInfo.flightNumber == flightNum).first()
+    airline = getattr(data,"airline")
+    dc = getattr(data,"departureTime")
+    s = getattr(data,"status")
+
+    speech = "Flight Info for" + flightNum + " Airline " + airline
+             + " departure City " + dc + " arrival time " + " status " +s
+
     res = {
-        "speech":getattr(data,"airline"),
-        "displayText": getattr(data,"airline"),
+        "speech":speech,
+        "displayText": speech,
         "source": "airline database"
     }
+
 
     res = json.dumps(res, indent=4)
     print(res)
