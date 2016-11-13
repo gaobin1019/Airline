@@ -45,8 +45,7 @@ def webhook():
     dc = getattr(data,"departureTime")
     s = getattr(data,"status")
 
-    speech = "Flight Info for" + flightNum + " Airline " + airline
-             + " departure City " + dc + " arrival time " + " status " +s
+    speech = "Flight Info for" + flightNum + " Airline " + airline + " departure City " + dc + " arrival time " + " status " +s
 
     res = {
         "speech":speech,
