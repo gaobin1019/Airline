@@ -8,7 +8,6 @@ from flask import Flask
 from flask import request
 from flask import make_response
 from flask_sqlalchemy import SQLAlchemy
-#from model import AirInfo
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -18,8 +17,6 @@ app.config.from_object(os.environ['APP_SETTINGS'])
 
 #create a db object  I'll manually enter data into database for this project.
 db = SQLAlchemy(app)
-
-from model import AirInfo
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
