@@ -8,7 +8,7 @@ from flask import Flask
 from flask import request
 from flask import make_response
 from flask_sqlalchemy import SQLAlchemy
-from model import AirInfo
+#from model import AirInfo
 
 # Flask app should start in global layout
 app = Flask(__name__)
@@ -21,7 +21,7 @@ db = SQLAlchemy(app)
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    data = AirInfo.query.filter(AirInfo.flightNumber=="522")
+    data = db.session.query.filter(AirInfo.flightNumber=="522")
     res = {
         "speech":data,
         "displayText": data,
