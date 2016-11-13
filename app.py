@@ -42,10 +42,10 @@ def webhook():
 
     data = AirInfo.query.filter(AirInfo.flightNumber == flightNum).first()
     airline = getattr(data,"airline")
-    dc = getattr(data,"departureTime")
+    dc = getattr(data,"departureCity")
     s = getattr(data,"status")
 
-    speech = "Flight Info for" + flightNum + " Airline " + airline + " departure City " + dc + " arrival time " + " status " +s
+    speech = "Flight Info for" + flightNum + ": " + airline + " Airline, " +  dc +" departure City, " +  " status " +s
 
     res = {
         "speech":speech,
