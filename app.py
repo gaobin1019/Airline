@@ -22,7 +22,7 @@ from model import *
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    data = AirInfo.query.filter(AirInfo.flightNumber=="522")
+    data = AirInfo.query.filter(AirInfo.flightNumber=="522").first()
     print("data")
     print(data)
     res = {
