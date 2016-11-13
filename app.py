@@ -40,7 +40,10 @@ def webhook():
         return{}
     flightNum = req.get("result").get("parameters").get("flightNumber")
 
-    data = AirInfo.query.filter(AirInfo.flightNumber == flightNum).first()
+    try:
+        data = AirInfo.query.filter(AirInfo.flightNumber == flightNum).first()
+    except:
+        db.session.rollback()
     airline = getattr(data,"airline")
     dc = getattr(data,"departureCity")
     s = getattr(data,"status")
