@@ -216,7 +216,19 @@ def processRequest(req):
         else:
             speech = flightNumberStr+" depart from "+departCity+" on "+airlineName
         return speech
+    elif action == "showFlightDepartTime":
+        flightNumber = req.get("result").get("parameters").get("flightNumber")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)).all()
+        except:
+            db.session.rollback()
 
+        departTime = ""
+        if rowList:
+            departTime = getattr(rowList[0],"departureTime")
+        speech = departTime
+        return speech
 
     else:
         return "Action:" + action + " not found"
