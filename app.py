@@ -69,7 +69,7 @@ def processRequest(req):
 
 
         departTimeStr= ""
-        for row in rowList:
+        for row in global rowList:
             departTimeStr += getattr(row,"departureTime") + ","
 
         speech = "Airline "+airlineName+" to "+cityName+" is scheduled at: "+departTimeStr
