@@ -373,7 +373,7 @@ def processRequest(req):
                 continue
         nextFlight = str(getattr(nextRow,"flightNumber"))
 
-        speech = "Next flight arrive "+toCity+" from "+fromCity+" is "+nextFlight+"."
+        speech = "Next flight arriving "+toCity+" from "+fromCity+" is "+nextFlight+"."
         return speech
     else:
         return "Action:" + action + " not found"
