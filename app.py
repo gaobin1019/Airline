@@ -313,6 +313,26 @@ def processRequest(req):
 
         speech = "Next flight from "+fromCity+" to "+toCity+" is "+nextFlight+"."
         return speech
+    #when does next flight arrive at $city
+    elif action == "showNextFlightArrivalTime":
+        cityName = req.get("result").get("parameters").get("cityName")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.arrivalCity == cityName).all()
+        except:
+            db.session.rollback()
+        minimum = 99999
+        nextRow = {}
+        for row in rowList:
+            if processTime(getattr(row,"arrivalTime")) < minimum:
+                minimum = processTime(getattr(row,"arrivalTime"))
+                nextRow = row
+            else:
+                continue
+        nextArrivalTime = getattr(nextRow,"arrivalTime")
+
+        speech = "Next arrival in "+cityName+" will be "+nextArrivalTime+"."
+        return speech
     else:
         return "Action:" + action + " not found"
 
