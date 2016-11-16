@@ -52,11 +52,14 @@ def processRequest(req):
         except:
             db.session.rollback()
         airline = getattr(data,"airline")
-        dc = getattr(data,"departureCity")
-        s = getattr(data,"status")
+        departureCity = getattr(data,"departureCity")
+        departureTime = getattr(data,"departureTime")
+        arrivalCity = getattr(data,"arrivalCity")
+        arrivalTime = getattr(data,"arrivalTime")
+        status = getattr(data,"status")
 
-        speech = "Flight Info for" + flightNum + ": " + airline + " Airline, " +\
-                dc +" departure City, " +  " status " +s
+        speech = airline + " " + flightNum + status +" from " + departureCity + " at " + \
+                departureTime + " will arrive " + arrivalCity + " at " + arrivalTime
         return speech
     elif action == "showFlightDepartTimeByAirline":
         airlineName = req.get("result").get("parameters").get("airlineName")
