@@ -134,8 +134,11 @@ def processTime(timeIn):
         tempList = timeIn.split(":")
         if tempList[1].split(" ")[1] == "AM":
             return int(tempList[0])*60 + int(tempList[1].split(" ")[0])
-        else:
-            return int(tempList[0])*60 + int(tempList[1].split(" ")[0]) + 12*60
+        else:#it's ugly, toto...
+            if tempList[0] == "12":
+                return int(tempList[0])*60 + int(tempList[1].split(" ")[0])
+            else:
+                return int(tempList[0])*60 + int(tempList[1].split(" ")[0]) + 12*60
     else:
         tempList = timeIn.split(":")
         return int(tempList[0])*60+int(tempList[1])
