@@ -180,7 +180,8 @@ def processRequest(req):
         allRows = AirInfo.query.all()
         allCityStr = ""
         for row in allRows:
-            allCityStr += getattr(row,"departureCity")+","
+            if getattr(row,"departureCity") not in allCityStr:
+                allCityStr += getattr(row,"departureCity")+","
         speech = "You can depart from "+allCityStr
         return speech
 
