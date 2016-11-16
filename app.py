@@ -103,7 +103,8 @@ def processRequest(req):
 
         if not beforeTimeFlight:
             speech = "No flight will arrive in "+arrivalCity+" before "+landTime
-        speech = "Flight number"+','.join(beforeTimeFlight) + " will arrive in "+arrivalCity+" before "+landTime
+        else:
+            speech = "Flight number"+','.join(beforeTimeFlight) + " will arrive in "+arrivalCity+" before "+landTime
         return speech
 
     else:
