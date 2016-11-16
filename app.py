@@ -63,8 +63,7 @@ def processRequest(req):
 
         rowList =[]
         try:
-            rowList = AirInfo.query.filter(AirInfo.airline == airlineName).\
-                                            filter(departureCity==cityName).all()
+            rowList = AirInfo.query.filter(AirInfo.airline == airlineName).filter(departureCity==cityName).all()
             print("rowList")
             print(rowList)
         except:
