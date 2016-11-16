@@ -96,7 +96,7 @@ def processRequest(req):
         beforeTimeFlight = []
         for row in allRows:
             if processTime(getattr(row,"arrivalTime")) < processTime(landTime):
-                beforeTimeFlight.append(getattr(row,"flightNumber"))
+                beforeTimeFlight.append(str(getattr(row,"flightNumber")))
 
 
         speech = "Flight number"+','.join(beforeTimeFlight) + " will arrive in "+arrivalCity+" before "+landTime
