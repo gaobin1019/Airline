@@ -133,7 +133,7 @@ def processRequest(req):
             db.session.rollback()
         flightNumberStr= ""
         for row in rowList:
-            flightNumberStr += getattr(row,"flightNumber") + ","
+            flightNumberStr += str(getattr(row,"flightNumber")) + ","
 
         speech = "flightNumber "+flightNumberStr+" will depart from "+departCityName
         return speech
