@@ -99,8 +99,7 @@ def processRequest(req):
                 beforeTimeFlight.append(getattr(row,"flightNumber"))
 
 
-        speech = "Flight number"+','.join(beforeTimeFlight) + " will arrive in "+arrivalCity+\
-                " before "+landTime
+        speech = "Flight number"+','.join(beforeTimeFlight) + " will arrive in "+arrivalCity+" before "+landTime
         return speech
 
     else:
