@@ -60,7 +60,7 @@ def processRequest(req):
 
         speech = airline + " " + flightNum + " from " + departureCity + " will depart at " + \
                 departureTime + ", will arrive " + arrivalCity + " at " + arrivalTime + \
-                " status " + status + "."
+                ", status " + status + "."
         return speech
     elif action == "showFlightDepartTimeByAirline":
         airlineName = req.get("result").get("parameters").get("airlineName")
@@ -291,8 +291,28 @@ def processRequest(req):
         for i in range(len(status)):
             speech += "Flight number "+flightNumber[i]+" "+status[i]+"."
         return speech
+    #next flight between city
+    elif action == "showNextFlightBetweenCities":
+        fromCity = req.get("result").get("parameters").get("fromCity")
+        toCity = req.get("result").get("parameters").get("toCity")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.departureCity == fromCity) \
+                                        .filter(AirInfo.arrivalCity == toCity).all()
+        except:
+            db.session.rollback()
+        minimum = 99999
+        nextRow = {}
+        for row in rowList:
+            if processTime(getattr(row,"departureTime")) < minimum:
+                minimum = processTime(getattr(row,"departureTime"))
+                nextRow = row
+            else:
+                continue
+        nextFlight = str(getattr(nextRow,"flightNumber"))
 
-
+        speech = "Next flight from "+fromCity+" to "+toCity+" is "+nextFlight+"."
+        return speech
     else:
         return "Action:" + action + " not found"
 
