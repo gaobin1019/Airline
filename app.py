@@ -486,7 +486,7 @@ def processRequest(req):
         rowList=[]
         try:
             rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)) \
-                                    .filter(AirInfo.status == "Departed").all()
+                                    .filter(AirInfo.status == "departed").all()
         except:
             db.session.rollback()
 
@@ -495,6 +495,7 @@ def processRequest(req):
         else:
             speech = "Yes, it is departed."
         return speech
+
     else:
         return "Action:" + action + " not found"
 
