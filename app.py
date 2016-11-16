@@ -124,6 +124,19 @@ def processRequest(req):
             speech = "Flight number"+','.join(betweenTimeFlight) + \
                     " will arrive in "+arrivalCity+" between "+startTime+" and "+endTime
         return speech
+    elif action == "showFlightDepartTimeByCity":
+        departCityName = req.get("result").get("parameters").get("cityName")
+        rowList =[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.departureCity==departCityName).all()
+        except:
+            db.session.rollback()
+        airlineStr= ""
+        for row in rowList:
+            airlineStr += getattr(row,"airline") + ","
+
+        speech = "Airline "+airlineStr+" will depart from "+departCityName
+        return speech
     else:
         return "Action:" + action + " not found"
 
