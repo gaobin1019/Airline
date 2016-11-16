@@ -65,6 +65,8 @@ def processRequest(req):
         try:
             rowList = AirInfo.query.filter(AirInfo.airline == airlineName).\
                                             filter(departureCity==cityName).all()
+            print("rowList")
+            print(rowList)
         except:
             db.session.rollback()
 
