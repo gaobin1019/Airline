@@ -97,6 +97,10 @@ def processRequest(req):
         for row in allRows:
             if processTime(getattr(row,"arrivalTime")) < processTime(landTime) and \
                                         getattr(row,"arrivalCity") == arrivalCity:
+
+                print(processTime(getattr(row,"arrivalTime")))
+                print("<")
+                print(processTime(landTime))
                 beforeTimeFlight.append(str(getattr(row,"flightNumber")))
 
 
