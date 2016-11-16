@@ -230,6 +230,20 @@ def processRequest(req):
         speech = departTime
         return speech
 
+    elif action == "showFlightLandTime":
+        flightNumber = req.get("result").get("parameters").get("flightNumber")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)).all()
+        except:
+            db.session.rollback()
+
+        landTime = ""
+        if rowList:
+            landTime = getattr(rowList[0],"arrivalTime")
+        speech = landTime
+        return speech
+
     else:
         return "Action:" + action + " not found"
 
