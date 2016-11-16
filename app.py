@@ -341,7 +341,7 @@ def processRequest(req):
         except:
             db.session.rollback()
 
-        speech = airlineName+" operates "+len(rowList)+" flights."
+        speech = airlineName+" operates "+str(len(rowList))+" flights."
         return speech
 
     else:
