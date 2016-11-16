@@ -449,7 +449,7 @@ def processRequest(req):
                                     .filter(AirInfo.status.contains("Delayed")).all()
             rowList.append(AirInfo.query.filter(AirInfo.departureCity == cityTwo) \
                                     .filter(AirInfo.arrivalCity == cityOne) \
-                                    .filter(AirInfo.status.contains("Delayed")).all()
+                                    .filter(AirInfo.status.contains("Delayed")).all())
         except:
             db.session.rollback()
 
