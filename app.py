@@ -402,6 +402,24 @@ def processRequest(req):
                     time+"."
 
         return speech
+    #Which flights have arrived in Atlanta?
+    elif action == "showArrivedByCity":
+        cityName = req.get("result").get("parameters").get("cityName")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.arrivalCity == cityName) \
+                                .filter(AirInfo.status == "Landed").all()
+        except:
+            db.session.rollback()
+
+        flightNumber = []
+        for row in rowList:
+            flightNumber.append(str(getattr(row,"flightNumber")))
+            status.append(getattr(row,"status"))
+        speech = ""
+        for i in range(len(status)):
+            speech += "Flight number "+flightNumber[i]+" "+status[i]+"."
+        return speech+" has arrived in "+cityName
     else:
         return "Action:" + action + " not found"
 
