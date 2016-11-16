@@ -198,6 +198,21 @@ def processRequest(req):
 
         speech = departCity+" can fly to "+arrivalCity
         return speech
+    elif action == "showFlightsByCityAndAirline":
+        departCity = req.get("result").get("parameters").get("cityName")
+        airlineName = req.get("result").get("parameters").get("airlineName")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.departureCity == departCity) \
+                                    .filter(AirInfo.airline == airlineName).all()
+        except:
+            db.session.rollback()
+        flightNumberStr=""
+        for row in rowList:
+            flightNumberStr += str(getattr(row,"flightNumber")) + ","
+
+        speech = flightNumberStr+" flies from "+departCity+" on "+airlineName
+        return speech
 
 
     else:
