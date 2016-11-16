@@ -343,6 +343,16 @@ def processRequest(req):
 
         speech = airlineName+" operates "+str(len(rowList))+" flights."
         return speech
+    elif action == "countFlightsLandingByCity":
+        cities = req.get("result").get("parameters").get("cities")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.arrivalCity == cities).all()
+        except:
+            db.session.rollback()
+
+        speech = str(len(rowList))+" flights are landing in "+cities+"."
+        return speech
 
     else:
         return "Action:" + action + " not found"
