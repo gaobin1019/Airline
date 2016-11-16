@@ -184,6 +184,19 @@ def processRequest(req):
                 allCityStr += getattr(row,"departureCity")+","
         speech = "You can depart from "+allCityStr
         return speech
+    elif action == "showFlightsByCity":
+        departCity = req.get("result").get("parameters").get("cityName")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.departureCity == departCity).all()
+        except:
+            db.session.rollback()
+        arrivalCity=""
+        for row in rowList:
+            arrivalCity += getattr(row,"arrivalCity") + ","
+
+        speech = departCity+" can fly to "+arrivalCity
+        return speech
 
 
     else:
