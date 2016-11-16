@@ -412,11 +412,11 @@ def processRequest(req):
         except:
             db.session.rollback()
 
-        flightNumber = []
+        flightNumber = ""
         for row in rowList:
-            flightNumber.append(str(getattr(row,"flightNumber")))
+            flightNumber += (str(getattr(row,"flightNumber")))
         speech = ""
-        
+
         return speech+" has arrived in "+cityName
     else:
         return "Action:" + action + " not found"
