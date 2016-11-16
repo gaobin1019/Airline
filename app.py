@@ -58,8 +58,8 @@ def processRequest(req):
         arrivalTime = getattr(data,"arrivalTime")
         status = getattr(data,"status")
 
-        speech = airline + " " + flightNum + " from " + departureCity + " at " + \
-                departureTime + " will arrive " + arrivalCity + " at " + arrivalTime + \
+        speech = airline + " " + flightNum + " from " + departureCity + " will depart at " + \
+                departureTime + ", will arrive " + arrivalCity + " at " + arrivalTime + \
                 " status " + status + "."
         return speech
     elif action == "showFlightDepartTimeByAirline":
