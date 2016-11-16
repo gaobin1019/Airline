@@ -43,7 +43,7 @@ def webhook():
     return r
 
 #request as json object
-def processRequest(request):
+def processRequest(req):
     action = req.get("result").get("action")
     if action == "showInfoByFlightNumber":
         flightNum = req.get("result").get("parameters").get("flightNumber")
