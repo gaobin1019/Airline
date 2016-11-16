@@ -83,6 +83,7 @@ def processRequest(req):
                                 filter(AirInfo.departureCity==cityName).all()
         except:
             db.session.rollback()
+        arrivalCity=""
         for row in rowList:
             arrivalCity += getattr(row,"arrivalCity") + ","
 
