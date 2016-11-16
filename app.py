@@ -119,7 +119,7 @@ def processRequest(req):
                 betweenTimeFlight.append(str(getattr(row,"flightNumber")))
 
         if not betweenTimeFlight:
-            speech = "No flight will arrive in "+arrivalCity+" between "+startTime " and "+endTime
+            speech = "No flight will arrive in "+arrivalCity+" between "+startTime+" and "+endTime
         else:
             speech = "Flight number"+','.join(beforeTimeFlight) + \
                     " will arrive in "+arrivalCity+" between "+startTime " and "+endTime
