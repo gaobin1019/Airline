@@ -193,7 +193,8 @@ def processRequest(req):
             db.session.rollback()
         arrivalCity=""
         for row in rowList:
-            arrivalCity += getattr(row,"arrivalCity") + ","
+            if getattr(row,"arrivalCity") not in arrivalCity:
+                arrivalCity += getattr(row,"arrivalCity") + ","
 
         speech = departCity+" can fly to "+arrivalCity
         return speech
