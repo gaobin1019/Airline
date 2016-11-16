@@ -95,7 +95,8 @@ def processRequest(req):
         allRows = AirInfo.query.all()
         beforeTimeFlight = []
         for row in allRows:
-            if processTime(getattr(row,"arrivalTime")) < processTime(landTime):
+            if processTime(getattr(row,"arrivalTime")) < processTime(landTime) and \
+                                        getattr(row,"arrivalCity") == arrivalCity:
                 beforeTimeFlight.append(str(getattr(row,"flightNumber")))
 
 
