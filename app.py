@@ -62,13 +62,13 @@ def processRequest(req):
         cityName = req.get("result").get("parameters").get("cityName")
 
         rowList =[]
-        try:
-            rowList = AirInfo.query.filter(AirInfo.airline == airlineName).filter(departureCity==cityName).all()
-            print("rowList")
-            print(rowList)
-        except:
-            print("exception happened")
-            db.session.rollback()
+        #try:
+        rowList = AirInfo.query.filter(AirInfo.airline == airlineName).filter(departureCity==cityName).all()
+        #    print("rowList")
+        #    print(rowList)
+        #except:
+        #    print("exception happened")
+        #    db.session.rollback()
 
 
         departTimeStr= ""
