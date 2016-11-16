@@ -34,15 +34,13 @@ def webhook():
         "displayText": speech,
         "source": "airline database"
     }
-
-
     res = json.dumps(res, indent=4)
     print(res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
 
-#request as json object
+#request as json object,return output as string,return error prompt if no action found.
 def processRequest(req):
     action = req.get("result").get("action")
     if action == "showInfoByFlightNumber":
@@ -56,10 +54,30 @@ def processRequest(req):
         dc = getattr(data,"departureCity")
         s = getattr(data,"status")
 
-        speech = "Flight Info for" + flightNum + ": " + airline + " Airline, " +  dc +" departure City, " +  " status " +s
+        speech = "Flight Info for" + flightNum + ": " + airline + " Airline, " +\
+                dc +" departure City, " +  " status " +s
         return speech
+    elif action == "showFlightDepartTimeByAirline":
+        airlineName = req.get("result").get("parameters").get("airlineName")
+        cityName = req.get("result").get("parameters").get("cityName")
+
+        try:
+            rowList = AirInfo.query.filter(AirInfo.airline == airlineName).\
+                                            filter(departureCity==cityName).all()
+        except:
+            db.session.rollback()
+
+
+        departTimeStr= ""
+        for row in rowList:
+            departTimeStr += getattr(row,"departureTime") + ","
+
+        speech = "Airline "+airlineName+" to "+cityName+" is scheduled at: "+departTimeStr
+        return speech
+
     else:
         return "Action:" + action + " not found"
+
 
 
 
