@@ -131,11 +131,11 @@ def processRequest(req):
             rowList = AirInfo.query.filter(AirInfo.departureCity==departCityName).all()
         except:
             db.session.rollback()
-        airlineStr= ""
+        flightNumberStr= ""
         for row in rowList:
-            airlineStr += getattr(row,"airline") + ","
+            flightNumberStr += getattr(row,"flightNumber") + ","
 
-        speech = "Airline "+airlineStr+" will depart from "+departCityName
+        speech = "flightNumber "+flightNumberStr+" will depart from "+departCityName
         return speech
     else:
         return "Action:" + action + " not found"
