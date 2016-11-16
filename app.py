@@ -333,6 +333,17 @@ def processRequest(req):
 
         speech = "Next arrival in "+cityName+" will be "+nextArrivalTime+"."
         return speech
+    elif action == "countFlightsLandingByAirline":
+        airlineName = req.get("result").get("parameters").get("airlineName")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.airline == airlineName).all()
+        except:
+            db.session.rollback()
+
+        speech = airlineName+" operates "+len(rowList)+" flights."
+        return speech
+
     else:
         return "Action:" + action + " not found"
 
