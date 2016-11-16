@@ -437,7 +437,7 @@ def processRequest(req):
             speech = "Yes, it arrived."
         return speech
 
-    #What flights are delayed between Portland and New York?
+    #What flights are delayed between Portland and New York? todo
     elif action == "showDelayedBetween":
         cityOne = req.get("result").get("parameters").get("cityOne")
         cityTwo = req.get("result").get("parameters").get("cityTwo")
@@ -446,10 +446,10 @@ def processRequest(req):
         try:
             rowList = AirInfo.query.filter(AirInfo.departureCity == cityOne) \
                                     .filter(AirInfo.arrivalCity == cityTwo) \
-                                    .filter("delayed" in AirInfo.status).all()
+                                    .filter(AirInfo.status.contains("Delayed")).all()
             rowList.append(AirInfo.query.filter(AirInfo.departureCity == cityTwo) \
                                     .filter(AirInfo.arrivalCity == cityOne) \
-                                    .filter("delayed" in AirInfo.status).all())
+                                    .filter(AirInfo.status.contains("Delayed")).all()
         except:
             db.session.rollback()
 
