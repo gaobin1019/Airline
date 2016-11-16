@@ -415,7 +415,6 @@ def processRequest(req):
         flightNumber = []
         for row in rowList:
             flightNumber.append(str(getattr(row,"flightNumber")))
-            status.append(getattr(row,"status"))
         speech = ""
         for i in range(len(status)):
             speech += "Flight number "+flightNumber[i]+" "+status[i]+"."
