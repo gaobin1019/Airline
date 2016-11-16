@@ -23,32 +23,11 @@ from model import *
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    """
-    data = AirInfo.query.filter(AirInfo.flightNumber=="522").first()
-    print("data")
-
-    print(getattr(data,"airline"))
-    print(type(getattr(data,"airline")))
-    """
-
-
     req = request.get_json(silent=True, force=True)
     print("request")
     print(json.dumps(req,indent=4))
 
-    if req.get("result").get("action") != "showInfoByFlightNumber":
-        return{}
-    flightNum = req.get("result").get("parameters").get("flightNumber")
-
-    try:
-        data = AirInfo.query.filter(AirInfo.flightNumber == flightNum).first()
-    except:
-        db.session.rollback()
-    airline = getattr(data,"airline")
-    dc = getattr(data,"departureCity")
-    s = getattr(data,"status")
-
-    speech = "Flight Info for" + flightNum + ": " + airline + " Airline, " +  dc +" departure City, " +  " status " +s
+    speech = processRequest(req)
 
     res = {
         "speech":speech,
@@ -62,6 +41,26 @@ def webhook():
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
     return r
+
+#request as json object
+def processRequest(request):
+    action = req.get("result").get("action")
+    if action == "showInfoByFlightNumber":
+        flightNum = req.get("result").get("parameters").get("flightNumber")
+
+        try:
+            data = AirInfo.query.filter(AirInfo.flightNumber == flightNum).first()
+        except:
+            db.session.rollback()
+        airline = getattr(data,"airline")
+        dc = getattr(data,"departureCity")
+        s = getattr(data,"status")
+
+        speech = "Flight Info for" + flightNum + ": " + airline + " Airline, " +  dc +" departure City, " +  " status " +s
+        return speech
+    else:
+        return "Action:" + action + " not found"
+
 
 
 if __name__ == '__main__':
