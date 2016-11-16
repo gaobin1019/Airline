@@ -472,7 +472,7 @@ def processRequest(req):
         try:
             rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)) \
                                     .filter(AirInfo.status.contains("Delayed")).all()
-            delayedInfo = str(AirInfo.status)
+            delayedInfo = AirInfo.status.stringify()
         except:
             db.session.rollback()
 
