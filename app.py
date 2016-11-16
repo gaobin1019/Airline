@@ -89,8 +89,37 @@ def processRequest(req):
 
         speech = "Airline "+airlineName+" from "+cityName+" has destination: "+arrivalCity
         return speech
+    elif action == "showFlightsByArrivalTime":
+        arrivalCity = req.get("result").get("parameters").get("cityName")
+        landTime = req.get("result").get("parameters").get("landTime")
+        allRows = AirInfo.query.all()
+        beforeTimeFlight = []
+        for row in allRows:
+            if processTime(getattr(row,"arrivalTime")) < processTime(landTime):
+                beforeTimeFlight.append(getattr(row,"flightNumber"))
+
+
+        speech = "Flight number"+','.join(beforeTimeFlight) + " will arrive in "+arrivalCity+\
+                " before "+landTime
+        return speech
+
     else:
         return "Action:" + action + " not found"
+
+#input "12:00:00" output  as integer as minutes passed in a day
+#input from database "4:20 PM"
+def processTime(timeIn):
+    if "M" in timeIn:
+        tempList = timeIn.split(":")
+        if tempList[1].split(" ")[1] == "AM":
+            return int(tempList[0])*60 + int(tempList[1].split(" ")[0])
+        else:
+            return int(tempList[0])*60 + int(tempList[1].split(" ")[0]) + 12*60
+    else:
+        tempList = timeIn.split(":")
+        return int(tempList[0])*60+int(tempList[1])
+
+
 
 
 
