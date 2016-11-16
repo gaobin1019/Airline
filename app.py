@@ -61,6 +61,7 @@ def processRequest(req):
         airlineName = req.get("result").get("parameters").get("airlineName")
         cityName = req.get("result").get("parameters").get("cityName")
 
+        rowList =[]
         try:
             rowList = AirInfo.query.filter(AirInfo.airline == airlineName).\
                                             filter(departureCity==cityName).all()
@@ -69,7 +70,7 @@ def processRequest(req):
 
 
         departTimeStr= ""
-        for row in global rowList:
+        for row in rowList:
             departTimeStr += getattr(row,"departureTime") + ","
 
         speech = "Airline "+airlineName+" to "+cityName+" is scheduled at: "+departTimeStr
