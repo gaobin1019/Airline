@@ -121,7 +121,7 @@ def processRequest(req):
         if not betweenTimeFlight:
             speech = "No flight will arrive in "+arrivalCity+" between "+startTime+" and "+endTime
         else:
-            speech = "Flight number"+','.join(beforeTimeFlight) + \
+            speech = "Flight number"+','.join(betweenTimeFlight) + \
                     " will arrive in "+arrivalCity+" between "+startTime+" and "+endTime
         return speech
     else:
