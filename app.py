@@ -509,7 +509,7 @@ def processRequest(req):
             speech = "No such flight number"
         else:
             speech = (processTime(getattr(owList[0],"arrivalTime")) - processTime(getattr(owList[0],"departureTime"))) \
-                        /60 " Hours."
+                        /60 +" Hours."
         return speech
 
     else:
