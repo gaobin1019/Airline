@@ -137,6 +137,24 @@ def processRequest(req):
 
         speech = "flightNumber "+flightNumberStr+" will depart from "+departCityName
         return speech
+    #depart after
+    elif action == "showFlightsByDepartureTime":
+        departlCity = req.get("result").get("parameters").get("cityName")
+        departTime = req.get("result").get("parameters").get("departTime")
+        allRows = AirInfo.query.all()
+        afterTimeFlight = []
+        for row in allRows:
+            if processTime(getattr(row,"departureTime")) > processTime(departTime) and \
+                                        getattr(row,"departureCity") == departlCity:
+
+                afterTimeFlight.append(str(getattr(row,"flightNumber")))
+
+        if not afterTimeFlight:
+            speech = "No flight will arrive in "+departlCity+" after "+departTime
+        else:
+            speech = "Flight number"+','.join(beforeTimeFlight) + \
+                    " will depart from "+departlCity+" after "+departTime
+        return speech
     else:
         return "Action:" + action + " not found"
 
