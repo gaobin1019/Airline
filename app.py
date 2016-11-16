@@ -211,7 +211,7 @@ def processRequest(req):
         for row in rowList:
             flightNumberStr += str(getattr(row,"flightNumber")) + ","
 
-        if not flightNumberStr:
+        if flightNumberStr == "":
             speech = "No flight depart from "+departCity+" on "+airlineName
         else:
             speech = flightNumberStr+" depart from "+departCity+" on "+airlineName
