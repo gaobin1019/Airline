@@ -496,6 +496,22 @@ def processRequest(req):
             speech = "Yes, it is departed."
         return speech
 
+    #How long is flight 679?
+    elif action == "showDurationByFlight":
+        flightNumber = req.get("result").get("parameters").get("flightNumber")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)).all()
+        except:
+            db.session.rollback()
+
+        if not rowList:
+            speech = "No such flight number"
+        else:
+            speech = (processTime(getattr(owList[0],"arrivalTime")) - processTime(getattr(owList[0],"departureTime"))) \
+                        /60 " Hours."
+        return speech
+
     else:
         return "Action:" + action + " not found"
 
