@@ -421,6 +421,21 @@ def processRequest(req):
         else:
             speech = "No flight has arrived in "+cityName+"yet"
         return speech
+    #Has flight 679 arrived?
+    elif action == "showArrivedByFlight":
+        flightNumber = req.get("result").get("parameters").get("flightNumber")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)) \
+                                    .filter(AirInfo.status == "Landed").all()
+        except:
+            db.session.rollback()
+
+        if not rowList:
+            speech = "Flight "+flightNumber+" has not arrived yet."
+        else:
+            speech = "Yes, it arrived."
+        return speech
     else:
         return "Action:" + action + " not found"
 
