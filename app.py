@@ -261,7 +261,7 @@ def processRequest(req):
         statusName = req.get("result").get("parameters").get("statusName")
         rowList=[]
         try:
-            rowList = AirInfo.query.filter(AirInfo.status == "Landed").all()
+            rowList = AirInfo.query.filter((AirInfo.status).lower() == statusName.lower()).all()
         except:
             db.session.rollback()
 
