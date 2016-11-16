@@ -354,7 +354,7 @@ def processRequest(req):
         speech = str(len(rowList))+" flights are landing in "+cities+"."
         return speech
     #next arrive flight between city
-    elif action == "showNextFlightBetweenCities":
+    elif action == "showFlightsBetweenCity":
         fromCity = req.get("result").get("parameters").get("fromCity")
         toCity = req.get("result").get("parameters").get("toCity")
         rowList=[]
