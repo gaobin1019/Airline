@@ -379,7 +379,7 @@ def processRequest(req):
         return speech
     #next arrive flight between city before $time
     elif action == "showFlightArriveByTimeCity":
-        timeNow = datetime.datetime.strftime(datetime.datetime.now(), '%H:%M:%S')
+        time = req.get("result").get("parameters").get("time")
         fromCity = req.get("result").get("parameters").get("fromCity")
         toCity = req.get("result").get("parameters").get("toCity")
         rowList=[]
@@ -390,13 +390,13 @@ def processRequest(req):
             db.session.rollback()
         flightNumber = ""
         for row in rowList:
-            if processTime(getattr(row,"arrivalTime")) > processTime(timeNow):
+            if processTime(getattr(row,"arrivalTime")) > processTime(time):
                 flightNumber += str(getattr(row,"flightNumber")) + ","
             else:
                 continue
 
         speech = "Flight "+flightNumber+"will arrive "+toCity+" from "+fromCity+" before "+ \
-                    datetime.datetime.strftime(datetime.datetime.now(), '%H:%M:%S')+"."
+                    time+"."
         return speech
     else:
         return "Action:" + action + " not found"
