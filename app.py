@@ -395,7 +395,8 @@ def processRequest(req):
             else:
                 continue
 
-        speech = "Flight "+flightNumber+"will arrive "+toCity+" from "+fromCity+" before "+timeNow+"."
+        speech = "Flight "+flightNumber+"will arrive "+toCity+" from "+fromCity+" before "+ \
+                    datetime.datetime.strftime(datetime.datetime.now(), '%H:%M:%S')+"."
         return speech
     else:
         return "Action:" + action + " not found"
