@@ -41,6 +41,7 @@ def webhook():
     return r
 
 #request as json object,return output as string,return error prompt if no action found.
+#a lot of thing to factor and improve. todo
 def processRequest(req):
     action = req.get("result").get("action")
     if action == "showInfoByFlightNumber":
@@ -67,15 +68,26 @@ def processRequest(req):
                                 filter(AirInfo.departureCity==cityName).all()
         except:
             db.session.rollback()
-
-
         departTimeStr= ""
         for row in rowList:
             departTimeStr += getattr(row,"departureTime") + ","
 
         speech = "Airline "+airlineName+" to "+cityName+" is scheduled at: "+departTimeStr
         return speech
+    elif action == "showDestinationsByCityAndAirline":
+        airlineName = req.get("result").get("parameters").get("airlineName")
+        cityName = req.get("result").get("parameters").get("fromCity")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.airline == airlineName).\
+                                filter(AirInfo.departureCity==cityName).all()
+        except:
+            db.session.rollback()
+        for row in rowList:
+            arrivalCity += getattr(row,"arrivalCity") + ","
 
+        speech = "Airline "+airlineName+" from "+cityName+" has destination: "+arrivalCity
+        return speech
     else:
         return "Action:" + action + " not found"
 
