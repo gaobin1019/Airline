@@ -444,12 +444,13 @@ def processRequest(req):
 
         rowList=[]
         try:
-            rowList = AirInfo.query.filter(AirInfo.departureCity == cityOne) \
+            listOne= AirInfo.query.filter(AirInfo.departureCity == cityOne) \
                                     .filter(AirInfo.arrivalCity == cityTwo) \
                                     .filter(AirInfo.status.contains("Delayed")).all()
-            rowList.append(AirInfo.query.filter(AirInfo.departureCity == cityTwo) \
+            listTwo = AirInfo.query.filter(AirInfo.departureCity == cityTwo) \
                                     .filter(AirInfo.arrivalCity == cityOne) \
-                                    .filter(AirInfo.status.contains("Delayed")).all())
+                                    .filter(AirInfo.status.contains("Delayed")).all()
+            rowList = listOne+listTwo
         except:
             db.session.rollback()
 
