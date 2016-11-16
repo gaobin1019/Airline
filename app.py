@@ -152,7 +152,7 @@ def processRequest(req):
         if not afterTimeFlight:
             speech = "No flight will depart from "+departlCity+" after "+departTime
         else:
-            speech = "Flight number"+','.join(beforeTimeFlight) + \
+            speech = "Flight number"+','.join(afterTimeFlight) + \
                     " will depart from "+departlCity+" after "+departTime
         return speech
     else:
