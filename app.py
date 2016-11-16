@@ -479,6 +479,22 @@ def processRequest(req):
         else:
             speech = "Yes, it delayed,"+getattr(rowList[0],"status")+"."
         return speech
+
+    #Has flight 679 arrived?
+    elif action == "showDepartedByFlight":
+        flightNumber = req.get("result").get("parameters").get("flightNumber")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)) \
+                                    .filter(AirInfo.status == "Departed").all()
+        except:
+            db.session.rollback()
+
+        if not rowList:
+            speech = "Flight "+flightNumber+" has not departed yet."
+        else:
+            speech = "Yes, it is departed."
+        return speech
     else:
         return "Action:" + action + " not found"
 
