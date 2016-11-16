@@ -436,6 +436,32 @@ def processRequest(req):
         else:
             speech = "Yes, it arrived."
         return speech
+
+    #What flights are delayed between Portland and New York?
+    elif action == "showArrivedByFlight":
+        cityOne = req.get("result").get("parameters").get("cityOne")
+        cityTwo = req.get("result").get("parameters").get("cityTwo")
+
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.departureCity == cityOne) \
+                                    .filter(AirInfo.arrivalCity == cityTwo) \
+                                    .filter("Delayed" in AirInfo.status).all()
+            rowList.append(AirInfo.query.filter(AirInfo.departureCity == cityTwo) \
+                                    .filter(AirInfo.arrivalCity == cityOne) \
+                                    .filter("Delayed" in AirInfo.status).all())
+        except:
+            db.session.rollback()
+
+        flightNumber = ""
+        for row in rowList:
+            flightNumber += (str(getattr(row,"flightNumber")))
+
+        if not rowList:
+            speech = "No flight is delayed between "+cityOne+" and "+cityTwo+"."
+        else:
+            speech = "Flight "+flightNumber+"is delayed between "+cityOne+" and "+cityTwo+"."
+        return speech
     else:
         return "Action:" + action + " not found"
 
