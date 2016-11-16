@@ -259,9 +259,10 @@ def processRequest(req):
 
     elif action == "showFlightsByStatus":
         statusName = req.get("result").get("parameters").get("statusName")
+        statusName = statusName.title()
         rowList=[]
         try:
-            rowList = AirInfo.query.filter((AirInfo.status).lower() == statusName.lower()).all()
+            rowList = AirInfo.query.filter(AirInfo.status == statusName).all()
         except:
             db.session.rollback()
 
