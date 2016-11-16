@@ -68,6 +68,7 @@ def processRequest(req):
             print("rowList")
             print(rowList)
         except:
+            print("exception happened")
             db.session.rollback()
 
 
