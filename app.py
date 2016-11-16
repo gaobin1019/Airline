@@ -3,6 +3,7 @@
 import urllib
 import json
 import os
+import datetime
 
 from flask import Flask
 from flask import request
@@ -355,6 +356,7 @@ def processRequest(req):
         return speech
     #next arrive flight between city
     elif action == "showFlightsBetweenCity":
+        timeNow = datetime.datetime.strftime(datetime.datetime.now(), '%H:%M:%S')
         fromCity = req.get("result").get("parameters").get("fromCity")
         toCity = req.get("result").get("parameters").get("toCity")
         rowList=[]
@@ -366,8 +368,8 @@ def processRequest(req):
         minimum = 99999
         nextRow = {}
         for row in rowList:
-            if processTime(getattr(row,"arrivalTime")) < minimum:
-                minimum = processTime(getattr(row,"arrivalTime"))
+            if processTime(getattr(row,"arrivalTime"))-processTime(timeNow) < minimum:
+                minimum = processTime(getattr(row,"arrivalTime"))-processTime(timeNow)
                 nextRow = row
             else:
                 continue
