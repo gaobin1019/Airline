@@ -508,9 +508,9 @@ def processRequest(req):
         if not rowList:
             speech = "No such flight number"
         else:
-            speech = (processTime(getattr(rowList[0],"arrivalTime")) - \
+            speech = str((processTime(getattr(rowList[0],"arrivalTime")) - \
                         processTime(getattr(rowList[0],"departureTime"))) \
-                            /60 +" Hours."
+                            /60) +" Hours."
         return speech
 
     else:
