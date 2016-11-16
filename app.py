@@ -415,9 +415,12 @@ def processRequest(req):
         flightNumber = ""
         for row in rowList:
             flightNumber += (str(getattr(row,"flightNumber")))
-        speech = ""
 
-        return speech+" has arrived in "+cityName
+        if flightNumber != "":
+            speech = flightNumber+" has arrived in "+cityName
+        else:
+            speech = "No flight has arrived in "+cityName+"yet"
+        return speech
     else:
         return "Action:" + action + " not found"
 
