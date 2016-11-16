@@ -353,7 +353,28 @@ def processRequest(req):
 
         speech = str(len(rowList))+" flights are landing in "+cities+"."
         return speech
+    #next arrive flight between city
+    elif action == "showNextFlightBetweenCities":
+        fromCity = req.get("result").get("parameters").get("fromCity")
+        toCity = req.get("result").get("parameters").get("toCity")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.departureCity == fromCity) \
+                                        .filter(AirInfo.arrivalCity == toCity).all()
+        except:
+            db.session.rollback()
+        minimum = 99999
+        nextRow = {}
+        for row in rowList:
+            if processTime(getattr(row,"arrivalTime")) < minimum:
+                minimum = processTime(getattr(row,"arrivalTime"))
+                nextRow = row
+            else:
+                continue
+        nextFlight = str(getattr(nextRow,"flightNumber"))
 
+        speech = "Next flight arrive "+toCity+" from "+fromCity+" is "+nextFlight+"."
+        return speech
     else:
         return "Action:" + action + " not found"
 
