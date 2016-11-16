@@ -100,13 +100,30 @@ def processRequest(req):
 
                 beforeTimeFlight.append(str(getattr(row,"flightNumber")))
 
-
         if not beforeTimeFlight:
             speech = "No flight will arrive in "+arrivalCity+" before "+landTime
         else:
             speech = "Flight number"+','.join(beforeTimeFlight) + " will arrive in "+arrivalCity+" before "+landTime
         return speech
+    elif action == "showFlightsLandingBetweenTimes":
+        arrivalCity = req.get("result").get("parameters").get("cityName")
+        startTime = req.get("result").get("parameters").get("startTime")
+        endTime = req.get("result").get("parameters").get("endTime")
+        allRows = AirInfo.query.all()
+        betweenTimeFlight = []
+        for row in allRows:
+            if processTime(getattr(row,"arrivalTime")) < processTime(endTime) and \
+                           getattr(row,"arrivalTime")) > processTime(startTime) and \
+                           getattr(row,"arrivalCity") == arrivalCity:
 
+                betweenTimeFlight.append(str(getattr(row,"flightNumber")))
+
+        if not betweenTimeFlight:
+            speech = "No flight will arrive in "+arrivalCity+" between "+startTime " and "+endTime
+        else:
+            speech = "Flight number"+','.join(beforeTimeFlight) + \
+                    " will arrive in "+arrivalCity+" between "+startTime " and "+endTime
+        return speech
     else:
         return "Action:" + action + " not found"
 
