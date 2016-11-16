@@ -113,7 +113,7 @@ def processRequest(req):
         betweenTimeFlight = []
         for row in allRows:
             if processTime(getattr(row,"arrivalTime")) < processTime(endTime) and \
-                           getattr(row,"arrivalTime")) > processTime(startTime) and \
+                           processTime(getattr(row,"arrivalTime")) > processTime(startTime) and \
                            getattr(row,"arrivalCity") == arrivalCity:
 
                 betweenTimeFlight.append(str(getattr(row,"flightNumber")))
