@@ -98,10 +98,11 @@ def processRequest(req):
             if processTime(getattr(row,"arrivalTime")) < processTime(landTime) and \
                                         getattr(row,"arrivalCity") == arrivalCity:
 
-                print(getattr(row,"arrivalTime"))
                 beforeTimeFlight.append(str(getattr(row,"flightNumber")))
 
 
+        if not beforeTimeFlight:
+            speech = "No flight will arrive in "+arrivalCity+" before "+landTime
         speech = "Flight number"+','.join(beforeTimeFlight) + " will arrive in "+arrivalCity+" before "+landTime
         return speech
 
