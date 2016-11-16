@@ -394,9 +394,13 @@ def processRequest(req):
                 flightNumber += str(getattr(row,"flightNumber")) + ","
             else:
                 continue
-
-        speech = "Flight "+flightNumber+"will arrive "+toCity+" from "+fromCity+" before "+ \
+        if flightNumber != "":
+            speech = "Flight "+flightNumber+"will arrive "+toCity+" from "+fromCity+" before "+ \
                     time+"."
+        else:
+            speech = "No flight will arrive "+toCity+" from "+fromCity+" before "+ \
+                    time+"."
+
         return speech
     else:
         return "Action:" + action + " not found"
