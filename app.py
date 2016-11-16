@@ -243,7 +243,19 @@ def processRequest(req):
             landTime = getattr(rowList[0],"arrivalTime")
         speech = landTime
         return speech
+    elif action == "showFlightsByAirline":
+        airlineName = req.get("result").get("parameters").get("airlineName")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.airline == airlineName).all()
+        except:
+            db.session.rollback()
 
+        flightNumber = ""
+        for row in rowList:
+            flightNumber += str(getattr(row,"flightNumber"))
+        speech = flightNumber
+        return speech
     else:
         return "Action:" + action + " not found"
 
