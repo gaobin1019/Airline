@@ -468,18 +468,16 @@ def processRequest(req):
     elif action == "showDelayedByFlight":
         flightNumber = req.get("result").get("parameters").get("flightNumber")
         rowList=[]
-        delayedInfo = ""
         try:
             rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)) \
                                     .filter(AirInfo.status.contains("Delayed")).all()
-            delayedInfo = AirInfo.status.value
         except:
             db.session.rollback()
 
         if not rowList:
             speech = "Flight "+flightNumber+" it not delayed."
         else:
-            speech = "Yes, it delayed,"+delayedInfo+"."
+            speech = "Yes, it delayed,"+getattr(rowList[0],"status")+"."
         return speech
     else:
         return "Action:" + action + " not found"
