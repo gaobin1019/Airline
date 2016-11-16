@@ -176,6 +176,15 @@ def processRequest(req):
             speech = "Flight number"+','.join(betweenTimeFlight) + \
                     " will depart from "+departCity+" between "+startTime+" and "+endTime
         return speech
+    elif action == "showCitiesWithFlights":
+        allRows = AirInfo.query.all()
+        allCityStr = ""
+        for row in allRows:
+            allCityStr += getattr(row,"departureCity")+","
+        speech = "You can depart from "+allCityStr
+        return speech
+
+
     else:
         return "Action:" + action + " not found"
 
