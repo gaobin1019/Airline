@@ -256,7 +256,6 @@ def processRequest(req):
             flightNumber += str(getattr(row,"flightNumber")) +","
         speech = "Flight Number: "+flightNumber
         return speech
-
     elif action == "showFlightsByStatus":
         statusName = req.get("result").get("parameters").get("statusName")
         statusName = statusName.title()
@@ -271,6 +270,24 @@ def processRequest(req):
             flightNumber += str(getattr(row,"flightNumber")) +","
         speech = "Flight Number: "+flightNumber+" are "+statusName
         return speech
+    elif action == "showStatusByAirline":
+        airlineName = req.get("result").get("parameters").get("airlineName")
+        rowList=[]
+        try:
+            rowList = AirInfo.query.filter(AirInfo.airline == airlineName).all()
+        except:
+            db.session.rollback()
+
+        status = []
+        flightNumber = []
+        for row in rowList:
+            flightNumber.append(str(getattr(row,"flightNumber")))
+            status.append(getattr(row,"status"))
+        for i in range(len(status)):
+            speech += "Flight number "+flightNumber[i]+" "+status[i]+"."
+        return speech
+
+
     else:
         return "Action:" + action + " not found"
 
