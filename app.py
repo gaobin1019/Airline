@@ -150,7 +150,7 @@ def processRequest(req):
                 afterTimeFlight.append(str(getattr(row,"flightNumber")))
 
         if not afterTimeFlight:
-            speech = "No flight will arrive in "+departlCity+" after "+departTime
+            speech = "No flight will depart from "+departlCity+" after "+departTime
         else:
             speech = "Flight number"+','.join(beforeTimeFlight) + \
                     " will depart from "+departlCity+" after "+departTime
