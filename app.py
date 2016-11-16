@@ -437,7 +437,7 @@ def processRequest(req):
             speech = "Yes, it arrived."
         return speech
 
-    #What flights are delayed between Portland and New York? todo
+    #What flights are delayed between Portland and New York?
     elif action == "showDelayedBetween":
         cityOne = req.get("result").get("parameters").get("cityOne")
         cityTwo = req.get("result").get("parameters").get("cityTwo")
@@ -463,8 +463,29 @@ def processRequest(req):
         else:
             speech = "Flight "+flightNumber+"is delayed between "+cityOne+" and "+cityTwo+"."
         return speech
+
+    #Is flight 679 delayed?
+    elif action == "showDelayedByFlight":
+        flightNumber = req.get("result").get("parameters").get("flightNumber")
+        rowList=[]
+        delayedInfo = ""
+        try:
+            rowList = AirInfo.query.filter(AirInfo.flightNumber == int(flightNumber)) \
+                                    .filter(AirInfo.status.contains("Delayed")).all()
+            delayedInfo = AirInfo.status
+        except:
+            db.session.rollback()
+
+        if not rowList:
+            speech = "Flight "+flightNumber+" it not delayed."
+        else:
+            speech = "Yes, it delayed,"+delayedInfo+"."
+        return speech
     else:
         return "Action:" + action + " not found"
+
+
+
 
 #input "12:00:00" output  as integer as minutes passed in a day
 #input from database "4:20 PM"
