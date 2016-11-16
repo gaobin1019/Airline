@@ -438,7 +438,7 @@ def processRequest(req):
         return speech
 
     #What flights are delayed between Portland and New York?
-    elif action == "showArrivedByFlight":
+    elif action == "showDelayedBetween":
         cityOne = req.get("result").get("parameters").get("cityOne")
         cityTwo = req.get("result").get("parameters").get("cityTwo")
 
