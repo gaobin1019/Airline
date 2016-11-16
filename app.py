@@ -253,8 +253,8 @@ def processRequest(req):
 
         flightNumber = ""
         for row in rowList:
-            flightNumber += str(getattr(row,"flightNumber"))
-        speech = flightNumber
+            flightNumber += str(getattr(row,"flightNumber")) +","
+        speech = "Flight Number: "+flightNumber
         return speech
     else:
         return "Action:" + action + " not found"
