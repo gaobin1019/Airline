@@ -416,8 +416,7 @@ def processRequest(req):
         for row in rowList:
             flightNumber.append(str(getattr(row,"flightNumber")))
         speech = ""
-        for i in range(len(status)):
-            speech += "Flight number "+flightNumber[i]+" "+status[i]+"."
+        
         return speech+" has arrived in "+cityName
     else:
         return "Action:" + action + " not found"
